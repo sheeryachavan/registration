@@ -1,8 +1,29 @@
 <template>
   <div class="container mt-5 mb-5">
+    <div
+      v-if="errors.submit"
+      class="
+        col-md-12
+        d-flex
+        justify-content-center
+        align-items-center
+        text-white
+        bg-danger
+        border-0
+      "
+      role="alert"
+    >
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ errors.submit }}
+        </div>
+      </div>
+    </div>
     <div class="col-md-12 d-flex justify-content-center">
       <div class="clsCardOuter card p-5">
-        <div class="card-header text-white mb-4"><h2>Sample Registraion Form!</h2></div>
+        <div class="card-header text-white mb-4">
+          <h2>Register for fetch rewards!</h2>
+        </div>
         <form id="register-form" @submit.prevent="onSubmit">
           <div class="form-floating mb-3">
             <input
@@ -133,15 +154,26 @@ export default {
   methods: {
     async onSubmit() {
       this.errors = {};
-      if (await this.validator()) {
-        console.log(this.model);
-        API.POST_FORM(this.model)
-          .then((res) => {
-            console.log(res); // eslint-disable-line no-debugger
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+      try {
+        if (await this.validator()) {
+          console.log(this.model);
+          API.POST_FORM(this.model)
+            .then((res) => {
+              console.log(res);
+              if (res.status === 200) {
+                this.$router.push({ name: "Success", params: { flag: true } });
+              } // eslint-disable-line no-debugger
+              else throw "Please try to submit again!";
+            })
+            .catch((err) => {
+              this.errors.submit =
+                err ||
+                "Sorry for the problem on our end. Please try to submit again!";
+            });
+        }
+      } catch (e) {
+        this.errors.submit =
+          e || "Sorry for the problem on our end. Please try to submit again!";
       }
     },
     validator() {

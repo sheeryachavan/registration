@@ -1,12 +1,12 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Register from "@/views/Register/Register.vue";
 import Success from "@/views/Success/Success.vue";
-import NotFound from "@/views/NotFound.vue";
+import NotFound from "@/views/NotFound/NotFound.vue";
 
 const routes = [
   {
     path: "/",
-    redirect:"register",
+    redirect: "register",
   },
   {
     path: "/register",
@@ -17,11 +17,18 @@ const routes = [
     path: "/success",
     name: "Success",
     component: Success,
+    props: true
   },
   {
-    path: "/*",
-    name: "Not Found",
-    component:  NotFound,
+    path: "/notfound",
+    name: "NotFound",
+    components: {
+      default: NotFound //Vue component
+    },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/notfound'
   },
 ];
 

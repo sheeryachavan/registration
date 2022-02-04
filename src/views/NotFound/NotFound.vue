@@ -3,10 +3,10 @@
     <div class="col-md-12 d-flex justify-content-center">
       <div class="clsCardOuter card p-5">
         <div class="card-header text-white mb-4">
-          <h2>Your Form has been submitted Successfully!</h2>
+          <h2>Oh ho! The Page you are looking for doesnt exist!</h2>
         </div>
         <router-link class="btn btn-success" to="/register"
-          >File New registration</router-link
+          >Go back to Registration!</router-link
         >
       </div>
     </div>
@@ -15,17 +15,7 @@
 
 <script>
 export default {
-  props: {
-    flag: {
-      type: Boolean,
-    },
-  },
-  mounted(){
-    debugger; // eslint-disable-line no-debugger
-    if(!this.flag){
-        this.$router.push({ name: "Register"});
-    }
-  }
+
 };
 </script>
 
